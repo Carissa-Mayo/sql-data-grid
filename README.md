@@ -24,8 +24,8 @@ Golden, CO receives the most solar radiation and wind speed on average as well a
 
 When looking at wind speed across the locations, these values are much more varied. Golden has the highest wind speeds on average due to the increase during the hours of 3 and 15 while the other locations are decreasing (Figure below). Contrastingly, Denver has the highest wind speed hours of all hours.
 
-![Wind Hours](images/wind_hours.png)
+![Wind Hours](images/windy_hours.png)
 
 ULtimately, Golden has the highest ranking when looking at a combined renewable index (avg(solar_radiation) + 100 * avg(wind_speed))
 
-![Combined Ranking](images/combined_ranking.png)
+![Combined Ranking](images/renewable_score.png)
