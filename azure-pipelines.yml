@@ -1,0 +1,39 @@
+# Azure DevOps (ADO) pipeline for a small, scheduled ETL job.
+# Runs daily and publishes run artifacts (no Azure Blob required).
+
+trigger: none
+
+schedules:
+- cron: "0 16 * * *"  # 16:00 UTC daily (~08:00 America/Los_Angeles in winter)
+  displayName: "Daily ETL (UTC)"
+  branches:
+    include:
+    - main
+  always: true
+
+pool:
+  vmImage: "ubuntu-latest"
+
+steps:
+- checkout: self
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: "3.11"
+  displayName: "Use Python 3.11"
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: "Install dependencies"
+
+- script: |
+    mkdir -p artifacts
+    python api_sql.py --mode daily --db artifacts/weather_grid.sqlite --artifacts-dir artifacts --wind-unit ms
+  displayName: "Run daily ETL + validation"
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: "artifacts"
+    artifact: "run-artifacts"
+  displayName: "Publish run artifacts"
