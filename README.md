@@ -1,5 +1,5 @@
 # Weather API and SQL Queries
-## A small-scale project using Python, SQLite and API requests
+## A small-scale project using automation, Python, SQLite and API requests
 
 This project demonstrates a complete, small-scale data workflow for ingesting hourly weather data from the Open-Meteo API and storing it in a relation SQL database. While this example has a small sample size, this schema can be used for large scale grid datasets.
 
