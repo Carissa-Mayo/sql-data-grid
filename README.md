@@ -1,7 +1,7 @@
 # Weather API and SQL Queries
 ## A small-scale project using automation, Python, SQLite and API requests
 
-This project demonstrates a complete, small-scale data workflow for ingesting hourly weather data from the Open-Meteo API and storing it in a relation SQL database. While this example has a small sample size, this schema can be used for large scale grid datasets.
+This project demonstrates a complete, small-scale data workflow for ingesting hourly weather data from the Open-Meteo API and storing it in a relational SQL database. While this example has a small sample size, this schema can be used for large scale grid datasets.
 
 This analysis pulls temperature, wind speed, and solar radiation for several Colorado Front Range cities and performs SQL queries of resource profiles relevant to renewable energy generation and grid planning.
 
@@ -26,6 +26,13 @@ When looking at wind speed across the locations, these values are much more vari
 
 ![Wind Hours](images/windy_hours.png)
 
-ULtimately, Golden has the highest ranking when looking at a combined renewable index (avg(solar_radiation) + 100 * avg(wind_speed))
+## Combined renewable score (unit-free)
+
+To avoid mixing units (W/m² vs m/s), the “combined renewable score” is computed using **ranks** rather than raw values:
+1) Compute each location’s average solar radiation and average wind speed over the timeframe.
+2) Rank locations separately by solar and wind (higher = better).
+3) Sum the two ranks. A higher total indicates consistently higher solar and wind relative to the others.
+
+This score is meant for **relative comparison across the sampled locations**, not as a physical estimate of energy output.
 
 ![Combined Ranking](images/renewable_score.png)
