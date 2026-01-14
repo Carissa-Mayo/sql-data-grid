@@ -1,12 +1,8 @@
-# github actions pipeline for a small, scheduled ETL job.
-# Runs daily and publishes run artifacts (no Azure Blob required).
-
 name: Daily ETL (Open-Meteo -> SQLite)
 
 on:
   workflow_dispatch:
   schedule:
-    # Runs at 09:00 UTC every day (edit as you like)
     - cron: "0 9 * * *"
 
 jobs:
@@ -30,7 +26,6 @@ jobs:
       - name: Run pipeline
         run: |
           mkdir -p artifacts
-          # Use your script's CLI if it supports it; otherwise just call python api_sql.py
           python api_sql.py --mode daily --db artifacts/weather_grid.sqlite --artifacts-dir artifacts --wind-unit ms
 
       - name: Upload artifacts
@@ -38,6 +33,3 @@ jobs:
         with:
           name: run-artifacts
           path: artifacts/
-
-    artifact: "run-artifacts"
-  displayName: "Publish run artifacts"
